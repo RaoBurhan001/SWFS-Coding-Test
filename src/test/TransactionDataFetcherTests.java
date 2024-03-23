@@ -46,11 +46,11 @@ public class TransactionDataFetcherTests {
     public void testGetTotalSenderTransactionAmount_DifferentSenders() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Saad Ali", 20, null, false, null));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Saad Ali", 20, null, false, null));
         transactions.add(new Transaction(12, BigDecimal.TEN, "Saad Ali", 20, "Saad Ali", 20, null, false, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
 
-        BigDecimal totalAmount = transactionDataFetcher.getTotalTransactionAmountSentBy("Mehran Kamal");
+        BigDecimal totalAmount = transactionDataFetcher.getTotalTransactionAmountSentBy("Muhammad Burhan");
         Assert.assertEquals(0, totalAmount.compareTo(BigDecimal.ONE));
 
         BigDecimal totalAmountNonPresentSender = transactionDataFetcher.getTotalTransactionAmountSentBy("Saad Ali");
@@ -61,7 +61,7 @@ public class TransactionDataFetcherTests {
     public void testGetMaxTransactionAmount_TransactionsPresent() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Saad Ali", 20, null, false, null));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Saad Ali", 20, null, false, null));
         transactions.add(new Transaction(13, BigDecimal.TEN, "Saad Ali", 20, "Saad Ali", 20, null, false, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
 
@@ -81,7 +81,7 @@ public class TransactionDataFetcherTests {
     public void testCountUniqueClients_DifferentClients() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Saad Ali", 20, null, false, null));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Saad Ali", 20, null, false, null));
         transactions.add(new Transaction(14, BigDecimal.TEN, "Saad Ali", 20, "Saad Ali", 20, null, false, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
 
@@ -93,7 +93,7 @@ public class TransactionDataFetcherTests {
     public void testCountUniqueClients_SameClient() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Mehran Kamal", 20, null, false, null));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Muhammad Burhan", 20, null, false, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
 
         Long totalClients = transactionDataFetcher.countUniqueClients();
@@ -104,11 +104,11 @@ public class TransactionDataFetcherTests {
     public void testHasOpenComplianceIssues() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Ali", 20, 32, false, "Looks like fraud"));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Ali", 20, 32, false, "Looks like fraud"));
         transactions.add(new Transaction(12, BigDecimal.ONE, "Hamza", 20, "Mehran", 20, null, true, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
 
-        Assert.assertTrue(transactionDataFetcher.hasOpenComplianceIssues("Mehran Kamal")); // Sender Case
+        Assert.assertTrue(transactionDataFetcher.hasOpenComplianceIssues("Muhammad Burhan")); // Sender Case
         Assert.assertTrue(transactionDataFetcher.hasOpenComplianceIssues("Ali")); // Beneficiary Case
         Assert.assertFalse(transactionDataFetcher.hasOpenComplianceIssues("Hamza")); // No open issue client
     }
@@ -146,8 +146,8 @@ public class TransactionDataFetcherTests {
         Integer unresolvedIssueId = 32;
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Ali", 20, unresolvedIssueId, false, "Looks like fraud"));
-        transactions.add(new Transaction(3, BigDecimal.TEN, "Mehran Kamal", 20, "Ali", 20, 35, true, "Looks like fraud"));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Ali", 20, unresolvedIssueId, false, "Looks like fraud"));
+        transactions.add(new Transaction(3, BigDecimal.TEN, "Muhammad Burhan", 20, "Ali", 20, 35, true, "Looks like fraud"));
 
         transactions.add(new Transaction(4, BigDecimal.ONE, "Hamza", 20, "Mehran", 20, null, true, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
@@ -162,8 +162,8 @@ public class TransactionDataFetcherTests {
     public void testGetAllSolvedIssueMessages() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Ali", 20, 32, true, "Legit transaction"));
-        transactions.add(new Transaction(3, BigDecimal.TEN, "Mehran Kamal", 20, "Ali", 20, 35, false, "Looks like fraud"));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Ali", 20, 32, true, "Legit transaction"));
+        transactions.add(new Transaction(3, BigDecimal.TEN, "Muhammad Burhan", 20, "Ali", 20, 35, false, "Looks like fraud"));
         transactions.add(new Transaction(4, BigDecimal.ONE, "Hamza", 20, "Mehran", 20, null, true, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
 
@@ -177,14 +177,14 @@ public class TransactionDataFetcherTests {
     public void testGetTopSender() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Ali", 20, 32, true, "Legit transaction"));
-        transactions.add(new Transaction(3, BigDecimal.TEN, "Mehran Kamal", 20, "Ali", 20, 35, false, "Looks like fraud"));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Ali", 20, 32, true, "Legit transaction"));
+        transactions.add(new Transaction(3, BigDecimal.TEN, "Muhammad Burhan", 20, "Ali", 20, 35, false, "Looks like fraud"));
         transactions.add(new Transaction(4, BigDecimal.TEN, "Hamza", 20, "Mehran", 20, null, true, null));
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
 
         String topSender = transactionDataFetcher.getTopSender();
 
-        Assert.assertTrue(topSender.equals("Mehran Kamal"));
+        Assert.assertTrue(topSender.equals("Muhammad Burhan"));
     }
 
     @Test
@@ -197,8 +197,8 @@ public class TransactionDataFetcherTests {
 
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        transactions.add(new Transaction(1, BigDecimal.ONE, "Mehran Kamal", 20, "Ali", 20, 32, true, "Legit transaction"));
-        transactions.add(new Transaction(3, BigDecimal.valueOf(3), "Mehran Kamal", 20, "Ali", 20, 35, false, "Looks like fraud"));
+        transactions.add(new Transaction(1, BigDecimal.ONE, "Muhammad Burhan", 20, "Ali", 20, 32, true, "Legit transaction"));
+        transactions.add(new Transaction(3, BigDecimal.valueOf(3), "Muhammad Burhan", 20, "Ali", 20, 35, false, "Looks like fraud"));
         transactions.addAll(expectedTopTransactions);
 
         Mockito.when(transactionRepository.getAll()).thenReturn(transactions);
